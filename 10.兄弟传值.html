@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+
+</head>
+<body>
+    <!-- 标签一定要驼峰 -->
+        <div id="app">
+                <Aemo></Aemo>
+                <Bemo></Bemo>
+                <Cemo></Cemo>
+           </div>
+    <script>
+
+     var Event = new Vue({
+     })   
+    var ADemo = {
+        data() {
+            return {
+                a:'这是A的数据'
+            }
+        },
+        template:`<div>{{a}}<input type="button"  value = '把A数据传给C' @click = 'send'/></div>`,
+        methods: {
+            send(){
+                Event.$emit('a-msg',this.a)
+            }
+        },
+    }
+    var BDemo = {
+        data() {
+            return {
+                b:'这是b的数据'
+            }
+        },
+        template:`<div>{{b}}<input type="button"  value = '把B数据传给C' @click = 'send'/></div>`,
+        methods: {
+            send(){
+                Event.$emit('b-msg',this.b)
+            }
+        },
+    }
+    var CDemo = {
+        data() {
+            return {
+                a:'',
+                b:''
+            }
+        },
+        template:`<div>
+            <h1>我是c组件</h1>
+            接受a传过来的值：{{a}}</br>
+            接受b传来的值:{{b}}
+        </div>`,
+        mounted() { //挂载
+            Event.$on('a-msg',(a)=>{
+                this.a = a
+            })
+            Event.$on('b-msg',(b)=>{
+                this.b = b
+            })
+        },
+        
+    }    
+    new Vue({
+        el: '#app',
+        components: {
+            'Aemo': ADemo,
+            'Bemo': BDemo,
+            'Cemo': CDemo
+        }
+    })
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<script src="./node_modules//vue/dist/vue.js"></script>
+<body>
+    <div id='app'>
+       <input type="text" v-model="price"/>
+       <h2>{{price|guolv}}</h2>
+       <h3>{{title|Fanzhuan('今天是冬至')}}</h3>
+    </div>
+
+    <script>
+        //全局过滤器{{数据|过滤器方法}}
+    Vue.filter('Fanzhuan',function(val,reg){
+         return reg+' '+val.split('').reverse().join('')
+    })
+     new Vue({
+         el:'#app',
+         data() {
+             return {
+                 price:0,
+                 title:'hello world!'
+                
+             }
+         },
+         //局部过滤器
+         filters:{
+             guolv(price){
+                 console.log(price)
+                return `￥`+price
+             }
+         }
+     })
+    </script>
+</body>
+</html>
